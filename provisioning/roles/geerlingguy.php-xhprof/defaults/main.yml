@@ -1,0 +1,12 @@
+---
+workspace: /root
+
+xhprof_version: "2.1.2"
+
+xhprof_download_url: https://github.com/longxinH/xhprof/archive/v{{ xhprof_version }}.zip
+xhprof_download_folder_name: xhprof-{{ xhprof_version }}
+
+xhprof_output_dir: /tmp
+
+php_xhprof_lib_dir: /usr/share/php/xhprof_lib
+php_xhprof_html_dir: /usr/share/php/xhprof_html
