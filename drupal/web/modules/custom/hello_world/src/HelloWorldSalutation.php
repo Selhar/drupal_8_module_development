@@ -8,6 +8,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
  * Prepares the salutation to the world
  */
 class HelloWorldSalutation {
+  
   use StringTranslationTrait;
 
   /**
