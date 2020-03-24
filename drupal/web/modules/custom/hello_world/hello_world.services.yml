@@ -7,3 +7,10 @@ services:
     arguments: ['@current_user', '@current_route_match']
     tags:
       - { name: event_subscriber }
+  hello_world.logger.channel.hello_world:
+    parent: logger.channel_base
+    arguments: ['hello_world']
+  hello_world.logger.hello_world:
+    class: Drupal\hello_world\Logger\MailLogger
+    tags:
+      - { name: logger }
