@@ -38,8 +38,6 @@ class HelloWorldController extends ControllerBase {
    * @return array
    */
   public function helloWorld() {
-    return [
-      '#markup' => $this->salutation->getSalutation(),
-    ];
+    return $this->salutation->getSalutationComponent();
   }
 }

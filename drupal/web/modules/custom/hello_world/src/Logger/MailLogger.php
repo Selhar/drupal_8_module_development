@@ -46,7 +46,7 @@ class MailLogger implements LoggerInterface {
 
     $to = $this->configFactory->get('system.site')->get('mail');
     $langcode = $this->configFactory->get('system.site')->get('langcode');
-    $variables = $this->parser->parserMessagePlaceholders($message, $context);
+    $variables = $this->parser->parseMessagePlaceholders($message, $context);
     $markup = new FormattableMarkup($message, $variables);
     \Drupal::service('plugin.manager.mail')->mail('hello_world', 'hello_world_log', $to, $langcode, ['message' => $markup]);
   }
