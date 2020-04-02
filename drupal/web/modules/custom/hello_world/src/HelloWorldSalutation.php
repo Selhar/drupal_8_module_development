@@ -72,13 +72,20 @@ class HelloWorldSalutation {
   public function getSalutationComponent() {
     $render = [
       '#theme' => 'hello_world_salutation',
+      '#salutation' => [
+        '#contextual_links' => [
+          'hello_world' => [
+            'route_parameters' => []
+          ]
+        ]
+      ]
     ];
 
     $config = $this->configFactory->get('hello_world.custom_salutation');
     $salutation = $config->get('salutation');
 
     if ($salutation != "") {
-      $render['#salutation'] = $salutation;
+      $render['#salutation']['#markup'] = $salutation;
       $render['#overridden'] = TRUE;
       return $render;
     }
@@ -88,17 +95,17 @@ class HelloWorldSalutation {
     $render['#target'] = $this->t('world');
 
     if ($time >= 00 && $time < 12) {
-      $render['#salutation'] = $this->t('Good morning');
+      $render['#salutation']['#markup'] = $this->t('Good morning');
       return $render;
     }
 
     if($time >= 12 && $time < 18) {
-      $render['#salutation'] = $this->t('Good evening');
+      $render['#salutation']['#markup'] = $this->t('Good evening');
       return $render;
     }
 
     if($time > 18) {
-      $render['#salutation'] = $this->t('Good evening');
+      $render['#salutation']['#markup'] = $this->t('Good evening');
       return $render;
     }
   }
