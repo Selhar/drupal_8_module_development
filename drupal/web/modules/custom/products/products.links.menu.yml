@@ -1,0 +1,7 @@
+# Product entity menu items
+entity.product.collection:
+  title: 'Product list'
+  route_name: entity.product.collection
+  description: 'List Product entities'
+  parent: system.admin_structure
+  weight: 100
