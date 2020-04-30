@@ -9,14 +9,15 @@ use Drupal\Core\Field\BaseFieldDefinition;
 
 /**
  * Defines the Product entity.
- * 
- * @ContentEntityType (
+ *
+ * @ContentEntityType(
  *  id = "product",
  *  label = @Translation("Product"),
+ *  bundle_label = @Translation("Product type"),
  *  handlers = {
  *    "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *    "list_builder" = "Drupal\products\ProductListBuilder",
- * 
+ *
  *    "form" = {
  *      "default" = "Drupal\products\Form\ProductForm",
  *      "add" = "Drupal\products\Form\ProductForm",
@@ -33,18 +34,22 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *    "id" = "id",
  *    "label" = "name",
  *    "uuid" = "uuid",
+ *    "bundle" = "type",
  *  },
  *  links = {
  *    "canonical" = "/admin/structure/product/{product}",
- *    "add-form" = "/admin/structure/product/add",
+ *    "add-form" = "/admin/structure/product/add/{product_type}",
  *    "edit-form" = "/admin/structure/product/{product}/edit",
  *    "delete-form" = "/admin/structure/product/{product}/delete",
  *    "collection" = "/admin/structure/product",
- *  }
+ *    "add-page" = "/admin/structure/product/add"
+ *  },
+ *  bundle_entity_type = "product_type",
+ *  field_ui_base_route = "entity.product_type.edit_form"
  * )
  */
 class Product extends ContentEntityBase implements ProductInterface {
-  
+
   use EntityChangedTrait;
 
   /**
@@ -102,7 +107,7 @@ class Product extends ContentEntityBase implements ProductInterface {
   /**
    * {@inheritdoc}
    */
-  public function setSource( $source) {
+  public function setSource($source) {
     $this->set('source', $source);
     return $this;
   }
@@ -122,6 +127,9 @@ class Product extends ContentEntityBase implements ProductInterface {
     return $this;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
@@ -136,7 +144,7 @@ class Product extends ContentEntityBase implements ProductInterface {
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'string',
-        'weigth' => -4,
+        'weight' => -4,
       ])
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
@@ -144,8 +152,8 @@ class Product extends ContentEntityBase implements ProductInterface {
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
-    
-    $fields['number'] = BaseFieldDefinition::Create('integer')
+
+    $fields['number'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('Number'))
       ->setDescription(t('The Product number.'))
       ->setSettings([
@@ -156,6 +164,10 @@ class Product extends ContentEntityBase implements ProductInterface {
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'number_unformatted',
+        'weight' => -4,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'number',
         'weight' => -4,
       ])
       ->setDisplayConfigurable('form', TRUE)
@@ -169,7 +181,7 @@ class Product extends ContentEntityBase implements ProductInterface {
         'text_processing' => 0,
       ])
       ->setDefaultValue('');
-    
+
     $fields['source'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Source'))
       ->setDescription(t('The source of the Product.'))
@@ -182,11 +194,11 @@ class Product extends ContentEntityBase implements ProductInterface {
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))
       ->setDescription(t('The time that the entity was created.'));
-    
-    $fields['changed'] = BaseFieldDefinition::create(('changed'))
+
+    $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the entity was last edited.'));
 
     return $fields;
-  } 
+  }
 }
