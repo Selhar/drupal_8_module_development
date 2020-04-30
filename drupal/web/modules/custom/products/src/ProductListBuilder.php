@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\products;
+namespace Drupal\products\Plugin;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
